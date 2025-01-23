@@ -27,16 +27,13 @@ int main(void){
 
     printf("Temperatursensor LM75 wird ausgelesen...\n");
     // In Schleife
-    while(1) {
-        char buf[2] = {0};
+    for(int i = 0; i < 20; i++){
+        uint8_t buf[2] = {0};
 
         // Daten lesen und ausgeben
         bcm2835_i2c_read(buf, 2);
 
-        #pragma GCC diagnostic push
-        #pragma GCC diagnostic ignored "-Wconversion"
-        int16_t temp = (buf[0] << 8) | buf[1];
-        #pragma GCC diagnostic pop
+        int temp = (buf[0] << 8) + buf[1];
 
         temp >>= 5;
         double temperature = temp * 0.125;
